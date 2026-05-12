@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Luis y Adriana - Nuestra Boda</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Itim&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS BASE --- */
+        body {
+            margin: 0;
+            background-image: url('fondo2.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-color: #efeeea;
+            font-family: 'Itim', cursive; 
+            color: #333;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            width: 100%;
+        }
+
+        /* Fix para evitar distorsión de fondo en iOS */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                background-attachment: scroll;
+            }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* --- SECCIÓN 1: CABECERA --- */
+        .header-section {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .floral {
+            position: absolute;
+            width: clamp(100px, 35vw, 350px);
+            z-index: 2;
+            pointer-events: none;
+        }
+        .top-left { top: 0; left: 0; }
+        .top-right { top: 0; right: 0; transform: scaleX(-1); }
+        .bottom-left { bottom: 0; left: 0; transform: scaleY(-1); }
+        .bottom-right { bottom: 0; right: 0; transform: scale(-1); }
+
+        .music-wrapper {
+            z-index: 5;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .play-btn-circle {
+            width: 35px;
+            height: 35px;
+            background-color: #b08d57;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nombres-tit {
+            font-family: 'Grand Hotel', cursive;
+            font-size: clamp(3rem, 14vw, 6.5rem);
+            color: #1a1a1a;
+            margin: 10px 0;
+            z-index: 3;
+            font-weight: normal;
+            line-height: 1.1;
+        }
+
+        .fecha-top {
+            font-family: 'Grand Hotel', sans-serif;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            letter-spacing: 3px;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            z-index: 3;
+        }
+
+        .foto-central-container {
+            position: relative;
+            width: clamp(280px, 80vw, 500px); 
+            height: auto;
+            z-index: 3;
+        }
+
+        .guirnalda {
+            width: 100%;
+            height: auto;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* --- SECCIÓN 2: CONTADOR --- */
+        .countdown-section {
+            padding: 60px 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .countdown-container {
+            border: 1px solid #b08d57;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap; 
+            gap: 10px;
+            padding: 20px 15px;
+            margin-bottom: 50px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(3px);
+            max-width: 95%;
+        }
+
+        .count-item { display: flex; flex-direction: column; align-items: center; min-width: 55px; }
+        .count-number { font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: #b08d57; font-weight: 300; }
+        .count-label { font-size: 0.8rem; color: #b08d57; margin-top: 5px; }
+
+        .mensaje-historia {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ddd;
+            padding: 30px 15px;
+            max-width: 800px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+            line-height: 1.4;
+            font-family: 'Grand Hotel', cursive;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            box-sizing: border-box;
+        }
+
+        .texto-cursive { font-family: 'Grand Hotel', cursive; font-size: clamp(1.8rem, 6vw, 2.8rem); color: #333; margin: 0; }
+
+        /* --- SECCIÓN 3: GALERÍA --- */
+        .galeria-section { padding: 40px 10px; text-align: center; }
+        .galeria-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .galeria-item { 
+            aspect-ratio: 1 / 1;
+            overflow: hidden; 
+            border-radius: 4px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+        }
+        .galeria-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        @media (max-width: 500px) {
+            .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* --- SECCIÓN PADRINOS --- */
+        .padrinos-section {
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .padrinos-box {
+            background-color: rgba(255, 255, 255, 0.6);
+            border: 2px double #bda377;
+            padding: 30px 15px;
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .padrinos-nombres {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: clamp(0.8rem, 3vw, 1rem);
+            letter-spacing: 1px;
+            color: #1a1a1a;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        /* --- SECCIÓN 4: TARJETAS --- */
+        .tarjetas-container { 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 20px; 
+            padding: 20px 10px; 
+        }
+        
+        .tarjeta-info {
+            background-color: rgba(255, 255, 255, 0.0);
+            border: 1px solid #444; 
+            width: 100%; 
+            max-width: 400px; 
+            flex: 1 1 300px;
+            padding: 25px 15px; 
+            text-align: center;
+            box-sizing: border-box; 
+            border-radius: 2px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .tarjeta-info p, .tarjeta-info p strong, .reserva-colores {
+            font-family: 'Grand Hotel', cursive;
+            font-size: 1.7rem;
+            color: #222;
+            margin: 10px 0;
+            line-height: 1.2;
+        }
+
+        .marco-foto { background: white; padding: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; width: 95%; box-sizing: border-box; }
+        .marco-foto img { width: 100%; height: 180px; object-fit: cover; display: block; border: 1px solid #eee; }
+
+        .titulo-script { 
+            font-family: 'Grand Hotel', cursive; 
+            font-size: clamp(2.5rem, 8vw, 3rem); 
+            margin: 5px 0; 
+            color: #1a1a1a; 
+            font-weight: normal; 
+        }
+
+        .btn-dorado {
+            display: inline-block; 
+            background-color: #bda377; 
+            color: white; 
+            text-decoration: none;
+            padding: 12px 30px; 
+            font-family: 'Montserrat', sans-serif; 
+            font-size: 0.8rem; 
+            letter-spacing: 2px; 
+            border-radius: 0;
+            text-transform: uppercase; 
+            margin-top: 10px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .reserva-colores { 
+            background: rgba(189, 163, 119, 0.1); 
+            padding: 15px; 
+            border-radius: 0; 
+            margin-top: 10px; 
+            border: 1px dashed #bda377; 
+            color: #444;
+            font-size: 1.5rem;
+            width: 90%;
+        }
+
+        .final-cta-section { text-align: center; padding: 40px 10px; }
+        .foto-clicable-container {
+            max-width: 850px; margin: 0 auto; position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;
+        }
+        
+        .footer-credits {
+            text-align: center; padding: 40px 20px; background: rgba(255,255,255,0.5);
+            border-top: 1px solid #ddd; margin-top: 50px;
+        }
+        .loja-credits { font-family: 'Montserrat', sans-serif; font-weight: bold; color: #bda377; margin-top: 10px !important; }
+
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <audio id="musica-boda" loop>
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <div class="header-section">
+        <img src="flores_esquina.png" class="floral top-left">
+        <img src="flores_esquina.png" class="floral top-right">
+        
+        <div class="music-wrapper" onclick="toggleMusica()">
+            <div class="play-btn-circle" id="play-icon">▶</div>
+            <p class="dale-play" style="font-family: 'Grand Hotel', cursive; font-size: 1.8rem; margin-top: 5px;">¡Dale play!</p>
+        </div>
+
+        <h1 class="nombres-tit">Luis y Adriana</h1>
+        <p class="fecha-top">11-07-2026</p>
+        
+        <div class="foto-central-container">
+            <img src="novios.png" class="guirnalda">
+        </div>
+        
+        <p style="margin-top: 40px; font-style: italic; max-width: 500px; z-index: 3; font-size: 1.2rem; padding: 0 15px;">
+            Con mucho amor y alegría, tenemos el honor de invitarlos a compartir con nosotros este día tan especial.
+        </p>
+    </div>
+
+    <div class="countdown-section reveal">
+        <div class="countdown-container">
+            <div class="count-item"><span class="count-number" id="days">00</span><span class="count-label">Días</span></div>
+            <div class="count-item"><span class="count-number" id="hours">00</span><span class="count-label">Hs</span></div>
+            <div class="count-item"><span class="count-number" id="minutes">00</span><span class="count-label">Min</span></div>
+            <div class="count-item"><span class="count-number" id="seconds">00</span><span class="count-label">Seg</span></div>
+        </div>
+
+        <div class="mensaje-historia">
+            <p class="texto-cursive">Nuestra Historia de Amor</p>
+            <p>Nuestra historia comenzó de una forma sencilla, casi sin darnos cuenta. Éramos amigos en la universidad… vivíamos cerca, pero nunca nos habíamos visto hasta aquel día en que decidimos conocernos. Desde entonces, empezamos a compartir momentos, salidas y conversaciones que fueron construyendo una conexión especial.</p>
+            <p>El destino nos tenía preparado algo más. En una fiesta, entre risas y miradas, nuestra historia dio un giro inesperado: dejamos de ser solo amigos y comenzamos a escribir un nuevo capítulo como novios.</p>
+            <p>No todo fue fácil. Nuestro inicio en el matrimonio estuvo lleno de retos y momentos difíciles que pusieron a prueba nuestro amor. Sin embargo, nunca dejamos de caminar juntos. Nos apoyamos, crecimos y aprendimos que, tomados de la mano, podíamos superar cualquier obstáculo.</p>
+            <p>Con el tiempo, la vida nos regaló nuestras más grandes bendiciones: nuestros hijos, quienes llenaron nuestro hogar de amor, esperanza y propósito. Y así, paso a paso, seguimos adelante, trabajando juntos, compartiendo sueños y construyendo un mismo camino.</p>
+            <p>Hoy, después de todo lo vivido, con el corazón lleno de gratitud, queremos dar un paso más y compartir nuestro amor ante Dios, celebrando nuestra historia, nuestra familia y el compromiso de seguir juntos por siempre.</p>
+        </div>
+    </div>
+
+    <div class="galeria-section reveal">
+        <h2 class="titulo-script" style="font-size: 3.5rem;">Galería de fotos</h2>
+        <div class="galeria-grid">
+            <div class="galeria-item"><img src="galeria1.jpg"></div>
+            <div class="galeria-item"><img src="galeria2.png"></div>
+            <div class="galeria-item"><img src="galeria3.png"></div>
+            <div class="galeria-item"><img src="galeria4.png"></div>
+            <div class="galeria-item"><img src="galeria5.png"></div>
+            <div class="galeria-item"><img src="galeria6.png"></div>
+        </div>
+    </div>
+
+    <div class="padrinos-section reveal">
+        <div class="padrinos-box">
+            <h2 class="titulo-script">Nuestros Padrinos</h2>
+            <div class="padrinos-nombres">
+                LUIS GERARDO YANCHAPAXI CAIZA<br>
+                NELLY SUSANA GÓMEZ HERRERA
+            </div>
+            <p style="margin-top: 15px; font-style: italic; color: #666; font-size: 1.2rem;">Con la bendición de Dios y nuestros padres</p>
+        </div>
+    </div>
+
+    <div class="tarjetas-container reveal">
+        <div class="tarjeta-info">
+            <div class="marco-foto"><img src="ceremonia.jpg"></div>
+            <h2 class="titulo-script">Ceremonia Religiosa</h2>
+            <p>15:00 hs<br>Santuario Católico Nuestra Señora de los Dolores | Aloasí</p>
+            <a href="https://maps.app.goo.gl/QXtP8zHD6Ka8KY2aA" target="_blank" class="btn-dorado">CÓMO LLEGAR</a>
+        </div>
+        <div class="tarjeta-info">
+            <div class="marco-foto"><img src="recepcion.png"></div>
+            <h2 class="titulo-script">Recepción</h2>
+            <p>16:30 hs<br>Aloasí - Barrio Miraflores </p>
+            <a href="https://maps.app.goo.gl/AyrC2xck3FvjxbGD8" target="_blank" class="btn-dorado">CÓMO LLEGAR</a>
+        </div>
+    </div>
+
+    <div class="tarjetas-container reveal">
+        <div class="tarjeta-info">
+            <img src="play.png" style="width:80px; opacity:0.7; margin-bottom: 10px;">
+            <h2 class="titulo-script">Playlist</h2>
+            <p>¡Ayúdanos a hacer la playlist de nuestra boda con las canciones infaltables!</p>
+            <a href="https://www.youtube.com/playlist?list=PLtri7wCCjsEbgBygqr1ulWVYLR_0VARCw&jct=N6udLZX9R6nOhxfDpFvwWw" target="_blank" class="btn-dorado">PLAYLIST</a>
+        </div>
+        <div class="tarjeta-info">
+            <img src="DRES.png" style="width:110px; margin-bottom: 10px;">
+            <h2 class="titulo-script">Dress Code</h2>
+            <p><strong>Elegante</strong><br>Vístete para una noche mágica y llena de estilo.</p>
+            <div class="reserva-colores">Se reserva el blanco (marfil, crema, beige), rosado (fucsia, palo de rosa, barbie) y rojo (pasión, ladrillo, vino). </div>
+        </div>
+    </div>
+
+    <div class="tarjetas-container reveal">
+        <div class="tarjeta-info">
+            <img src="DRIVE.png" style="width:70px; margin-bottom: 10px;">
+            <h2 class="titulo-script">Fotos</h2>
+            <p>¡Comparte tus fotos con nosotros! Haz clic en el botón para subirlas a nuestro álbum digital.</p>
+            <a href="https://drive.google.com" target="_blank" class="btn-dorado">SUBIR FOTOS</a>
+        </div>
+        <div class="tarjeta-info">
+            <img src="PARTY.png" style="width:80px; margin-bottom: 10px;">
+            <h2 class="titulo-script">Party Code</h2>
+            <p>Para nosotros es importante su presencia, pero debido a la naturaleza íntima de la celebración, la invitación es únicamente para las personas mencionadas.</p>
+        </div>
+    </div>
+    
+
+    <div class="tarjetas-container reveal">
+        <div class="tarjeta-info">
+            <img src="REGALO.png" style="width:90px; filter: grayscale(1); margin-bottom: 10px;">
+            <h2 class="titulo-script">Mesa de Regalos</h2>
+            <p>Banco de Pichincha<br>
+                Nombre: Luis Yanchapaxi<br>
+                Cuenta ahorros: 5837132600<br>
+                Cédula: 1719981894</p>
+        </div>
+        <div class="tarjeta-info">
+            <img src="confirm.png" style="width:60px; filter: grayscale(1); margin-bottom: 10px;">
+            <h2 class="titulo-script">Confirmación</h2>
+            <p>Para nosotros es muy importante que confirmes tu asistencia a través del siguiente enlace.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfv4pWTBVE-04fq-ZMgj8zKuBw7t4xc8WA1xP8rrPEdc17_hA/viewform?usp=dialog" target="_blank" class="btn-dorado">CONFIRMA ACÁ</a>
+        </div>
+    </div>
+<div class="tarjetas-container reveal">
+    <div class="tarjeta-info tarjeta-pases">
+        <img src="https://cdn-icons-png.flaticon.com/512/3067/3067451.png" style="width:70px; margin-bottom: 10px; filter: sepia(0.5);">
+        <h2 class="titulo-script">Invitación Especial</h2>
+        <div class="cuadro-pases">
+            <p class="nombre-invitado">Luis Gerardo Yanchapaxi y Nelly Susana Gomez</p>
+            <div class="linea-divisoria"></div>
+            <p class="numero-pases">2 Pases</p>
+        </div>
+        <p style="font-size: 0.9rem; font-style: italic; margin-top: 10px;">¡Los esperamos con mucha ilusión!</p>
+    </div>
+</div>
+    <div class="final-cta-section reveal">
+        <h2 class="titulo-script" style="font-size: 3rem;">Los esperamos para celebrar nuestro amor</h2>
+        <div class="foto-clicable-container">
+            <img src="fotofinal.png">
+        </div>
+    </div>
+
+    <footer class="footer-credits">
+        <p class="loja-credits">Realizado por Páginas Web Loja / 0960934663</p>
+    </footer>
+
+    <script>
+        const musica = document.getElementById('musica-boda');
+        function toggleMusica() {
+            if (musica.paused) { musica.play(); document.getElementById('play-icon').innerHTML = "||"; }
+            else { musica.pause(); document.getElementById('play-icon').innerHTML = "▶"; }
+        }
+
+        const fechaEvento = new Date("Jul 11, 2026 15:00:00").getTime();
+        setInterval(() => {
+            const ahora = new Date().getTime();
+            const diff = fechaEvento - ahora;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(r => {
+                if (r.getBoundingClientRect().top < window.innerHeight - 50) r.classList.add("active");
+            });
+        }
+        window.addEventListener("scroll", reveal); reveal();
+    </script>
+</body>
+</html>
