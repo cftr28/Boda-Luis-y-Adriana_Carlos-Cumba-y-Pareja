@@ -252,20 +252,23 @@ body::before {
         }
         
         .tarjeta-info {
-            background-color: rgba(255, 255, 255, 0.0);
-            border: 1px solid #444; 
-            width: 80%; 
-            max-width: 300px; 
-            flex: 1 1 300px;
-            padding: 25px 15px; 
-            text-align: center;
-            box-sizing: border-box; 
-            border-radius: 2px;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+    background-color: rgba(255, 255, 255, 0.0);
+    border: 1px solid #444; 
+    /* 1. Reducimos el ancho base y el máximo */
+    width: 70%; 
+    max-width: 260px; 
+    /* 2. Reducimos el flex-basis para que no intenten ocupar mucho espacio */
+    flex: 0 1 260px;
+    /* 3. Reducimos el padding (relleno) superior e inferior */
+    padding: 15px 10px; 
+    text-align: center;
+    box-sizing: border-box; 
+    border-radius: 2px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
 
         .tarjeta-info p, .tarjeta-info p strong, .reserva-colores {
             font-family: 'Grand Hotel', cursive;
@@ -279,12 +282,15 @@ body::before {
         .marco-foto img { width: 100%; height: 180px; object-fit: cover; display: block; border: 1px solid #eee; }
 
         .titulo-script { 
-            font-family: 'Grand Hotel', cursive; 
-            font-size: clamp(2rem, 6vw, 2.5rem); 
-            margin: 5px 0; 
-            color: #1a1a1a; 
-            font-weight: normal; 
-        }
+    font-family: 'Grand Hotel', cursive; 
+    /* Reducimos el tamaño para que no ocupe tantas líneas */
+    font-size: clamp(1.5rem, 5vw, 1.8rem); 
+    /* Reducimos el margen vertical de 5px a 2px */
+    margin: 2px 0; 
+    color: #1a1a1a; 
+    font-weight: normal; 
+    line-height: 1; /* Obligamos a que la línea sea compacta */
+}
 
         .btn-dorado {
             display: inline-block; 
