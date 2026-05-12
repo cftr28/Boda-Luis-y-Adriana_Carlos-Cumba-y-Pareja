@@ -19,7 +19,7 @@ body {
     overflow-x: hidden;
 }
 
-/* 2. El contenedor del fondo */
+/* 2. El contenedor del fondo (POR DEFECTO PARA MÓVILES) */
 body::before {
     content: "";
     position: fixed;
@@ -29,29 +29,22 @@ body::before {
     height: 100%;
     z-index: -1;
     
-    background-image: url('fotofondo.png');
+    /* Imagen para CELULARES (Vertical) */
+    background-image: url('fotofondo.png'); 
     background-repeat: no-repeat;
     background-position: center center;
-    
-    /* Evita que la imagen se vea borrosa al estirarse en monitores grandes */
-    image-rendering: auto; 
-    
-    /* Por defecto para móviles */
     background-size: cover; 
+    image-rendering: auto; 
 }
 
 /* 3. Ajuste para PC (Pantallas horizontales) */
 @media (min-width: 1025px) {
     body::before {
-        /* Si la imagen se ve "estirada" o "pixelada", cámbialo a 'contain' 
-           para que se vea la foto completa sin deformarse */
-        background-size: contain; 
+        /* Imagen para COMPUTADORAS (Horizontal) */
+        background-image: url('fondocambio.png'); 
         
-        /* Opcional: Si usas 'contain', el color de fondo rellenará los lados */
+        background-size: cover; /* Cambié 'contain' por 'cover' para que llene toda la pantalla */
         background-color: #efeeea; 
-        
-        /* Añade un ligero desenfoque si la imagen es de poca resolución 
-           para que no se vean los píxeles "cuadrados" */
         filter: blur(0px); 
     }
 }
